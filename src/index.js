@@ -1,15 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {IntlProvider} from 'react-intl';
 import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import localeEnMessages from './locales/en.json';
+import localeEsMessages from './locales/es.json';
+
+const userLocale = 
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
+
+const localeMessages = 
+  userLocale.includes("es")
+    ? localeEsMessages
+    : localeEnMessages
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <IntlProvider locale={userLocale} messages={localeMessages}>
+      <App/>
+    </IntlProvider>
   </React.StrictMode>
 );
 
